@@ -21,7 +21,10 @@
 
 .search-box input {
   width: 100%;
-  padding: 18rpx 108rpx 18rpx 22rpx;
+  display: block;
+  height: 92rpx;
+  padding: 0 108rpx 0 22rpx;
+  line-height: 92rpx;
   border-radius: 20rpx;
   background: #f7fcfc;
   border: 1rpx solid rgba(14, 116, 144, 0.08);
@@ -51,6 +54,7 @@
 .task-row {
   display: inline-flex;
   gap: 12rpx;
+  padding-right: 8rpx;
 }
 
 .hospital-chip,
@@ -94,6 +98,7 @@
 .hospital-summary .muted {
   display: block;
   margin-top: 10rpx;
+  word-break: break-all;
 }
 
 .task-panel {
@@ -141,6 +146,7 @@
 .step-card .muted {
   display: block;
   margin-top: 8rpx;
+  word-break: break-all;
 }
 
 .step-card .notice {
@@ -168,6 +174,7 @@
 
 .action-btn {
   width: 100%;
+  box-sizing: border-box;
   padding: 24rpx;
   border-radius: 999rpx;
   font-size: 32rpx;

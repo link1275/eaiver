@@ -2,11 +2,16 @@
   display: flex;
   gap: 16rpx;
   padding: 12rpx 0 20rpx;
+  width: 100%;
 }
 
 .search-input {
   flex: 1;
-  padding: 18rpx 24rpx;
+  min-width: 0;
+  width: 0;
+  height: 88rpx;
+  padding: 0 24rpx;
+  line-height: 88rpx;
   border-radius: 999rpx;
   background: rgba(255, 255, 255, 0.9);
   border: 1rpx solid rgba(14, 116, 144, 0.08);
@@ -16,7 +21,12 @@
 }
 
 .search-btn {
-  padding: 18rpx 28rpx;
+  flex-shrink: 0;
+  height: 88rpx;
+  padding: 0 28rpx;
+  display: flex;
+  align-items: center;
+  justify-content: center;
   border-radius: 999rpx;
   background: linear-gradient(135deg, #0891b2 0%, #0f766e 100%);
   color: #fff;
@@ -163,11 +173,13 @@
   margin-top: 26rpx;
   display: flex;
   gap: 16rpx;
+  width: 100%;
 }
 
 .hero-actions .primary-btn,
 .hero-actions .secondary-btn {
   flex: 1;
+  min-width: 0;
 }
 
 .strip-list,
@@ -229,6 +241,7 @@
 .department-card .muted {
   display: block;
   margin-top: 8rpx;
+  word-break: break-all;
 }
 
 .hospital-card,
