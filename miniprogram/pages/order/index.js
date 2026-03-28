@@ -2,6 +2,16 @@ const { hospitals } = require("../../data/hospitals");
 const { departmentMatches } = require("../../data/departments");
 const { sopStages } = require("../../data/processes");
 
+function buildProgressItems(progressIndex) {
+  return sopStages.map((stage, index) => ({
+    title: stage,
+    order: index + 1,
+    active: index <= progressIndex,
+    current: index === progressIndex,
+    showLine: index < sopStages.length - 1
+  }));
+}
+
 Page({
   data: {
     hospitals,
@@ -17,10 +27,10 @@ Page({
     pickupNeeded: false,
     reportNeeded: false,
     orderPreview: null,
-    sopStages,
     showProgress: false,
     currentProgress: 0,
-    progressIndex: 0
+    progressItems: buildProgressItems(-1),
+    sopPreviewItems: buildProgressItems(-1)
   },
 
   onInput(event) {
@@ -67,40 +77,55 @@ Page({
   },
 
   simulateProgress() {
-    const that = this;
     this.setData({ showProgress: true });
     let progress = 0;
     const interval = setInterval(() => {
-      progress++;
-      if (progress >= 10) {
+      progress += 1;
+      if (progress >= sopStages.length - 1) {
         clearInterval(interval);
         wx.showToast({ title: "服务已完成！", icon: "success" });
       }
-      that.setData({ currentProgress: progress, progressIndex: progress });
+      this.setData({
+        currentProgress: progress,
+        progressItems: buildProgressItems(progress)
+      });
     }, 1500);
   },
 
   resetProgress() {
-    this.setData({ showProgress: false, currentProgress: 0, progressIndex: 0 });
+    this.setData({
+      showProgress: false,
+      currentProgress: 0,
+      progressItems: buildProgressItems(-1)
+    });
   },
 
   submitOrder() {
-    const patientName = this.data.patientName || "";
-    if (!patientName.trim()) {
+    const patientName = (this.data.patientName || "").trim();
+    if (!patientName) {
       wx.showToast({ title: "请先填写患者姓名", icon: "none" });
       return;
     }
+
+    const progressIndex = this.data.appointmentOptions[this.data.appointmentIndex] === "未预约，需要协助挂号" ? 1 : 3;
     const preview = {
-      patientName: patientName.trim(),
+      patientName,
       age: this.data.age || "未填写",
       hospitalName: this.data.hospitalNames[this.data.hospitalIndex],
       departmentType: this.data.departmentTypes[this.data.departmentIndex],
       appointmentStatus: this.data.appointmentOptions[this.data.appointmentIndex],
       mobilityLevel: this.data.mobilityOptions[this.data.mobilityIndex],
-      pickupNeeded: this.data.pickupNeeded,
-      reportNeeded: this.data.reportNeeded,
+      pickupNeededText: this.data.pickupNeeded ? "需要" : "不需要",
+      reportNeededText: this.data.reportNeeded ? "需要" : "不需要",
       notes: this.data.notes || "无"
     };
-    this.setData({ orderPreview: preview, showProgress: false, currentProgress: 0, progressIndex: 0 });
+
+    this.setData({
+      orderPreview: preview,
+      showProgress: false,
+      currentProgress: 0,
+      progressItems: buildProgressItems(-1),
+      sopPreviewItems: buildProgressItems(progressIndex)
+    });
   }
 });

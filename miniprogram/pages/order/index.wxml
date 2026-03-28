@@ -1,5 +1,4 @@
 <view class="page-shell">
-  <!-- 紧急呼叫按钮 -->
   <view class="emergency-bar" bindtap="callEmergency">
     <text class="emergency-icon">📞</text>
     <text class="emergency-text">紧急呼叫</text>
@@ -68,14 +67,13 @@
     <view class="primary-btn submit-btn" bindtap="submitOrder">生成服务单</view>
   </view>
 
-  <!-- 服务进度展示 -->
   <view class="panel progress-panel" wx:if="{{orderPreview && showProgress}}">
     <view class="eyebrow">服务进度</view>
     <view class="progress-timeline">
-      <view class="progress-item {{currentProgress >= index ? 'active' : ''}} {{currentProgress === index ? 'current' : ''}}" wx:for="{{sopStages}}" wx:key="*this">
+      <view class="progress-item {{item.active ? 'active' : ''}} {{item.current ? 'current' : ''}}" wx:for="{{progressItems}}" wx:key="order">
         <view class="progress-dot"></view>
-        <view class="progress-line" wx:if="{{index < sopStages.length - 1}}"></view>
-        <view class="progress-label">{{item}}</view>
+        <view class="progress-line" wx:if="{{item.showLine}}"></view>
+        <view class="progress-label">{{item.title}}</view>
       </view>
     </view>
   </view>
@@ -89,26 +87,24 @@
       <view class="preview-item">年龄：{{orderPreview.age}}</view>
       <view class="preview-item">预约状态：{{orderPreview.appointmentStatus}}</view>
       <view class="preview-item">行动能力：{{orderPreview.mobilityLevel}}</view>
-      <view class="preview-item">上门接送：{{orderPreview.pickupNeeded ? '需要' : '不需要'}}</view>
-      <view class="preview-item">报告 / 取药协助：{{orderPreview.reportNeeded ? '需要' : '不需要'}}</view>
+      <view class="preview-item">上门接送：{{orderPreview.pickupNeededText}}</view>
+      <view class="preview-item">报告 / 取药协助：{{orderPreview.reportNeededText}}</view>
       <view class="preview-item">备注：{{orderPreview.notes}}</view>
     </view>
 
     <view class="sop-grid">
-      <view class="sop-card {{index <= progressIndex ? 'active' : ''}}" wx:for="{{sopStages}}" wx:key="*this">
-        <view class="sop-index">{{index + 1}}</view>
-        <view class="sop-title">{{item}}</view>
+      <view class="sop-card {{item.active ? 'active' : ''}}" wx:for="{{sopPreviewItems}}" wx:key="order">
+        <view class="sop-index">{{item.order}}</view>
+        <view class="sop-title">{{item.title}}</view>
       </view>
     </view>
 
-    <!-- 模拟进度按钮 -->
-    <view class="progress-actions" wx:if="{{orderPreview}}">
+    <view class="progress-actions">
       <button class="progress-btn" bindtap="simulateProgress">模拟服务进度</button>
       <button class="progress-btn reset" bindtap="resetProgress" wx:if="{{showProgress}}">重置</button>
     </view>
   </view>
 
-  <!-- 空状态提示 -->
   <view class="empty-tip" wx:if="{{!orderPreview}}">
     <text class="empty-icon">📋</text>
     <text class="empty-text">填写上方信息，生成服务单后可查看陪诊流程</text>

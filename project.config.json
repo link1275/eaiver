@@ -1,7 +1,8 @@
 {
   "description": "陪诊通微信小程序",
   "packOptions": {
-    "ignore": []
+    "ignore": [],
+    "include": []
   },
   "setting": {
     "babelSetting": {
@@ -18,13 +19,27 @@
     "showShadowRootInWxmlPanel": true,
     "packNpmRelationList": [],
     "ignoreUploadUnusedFiles": true,
-    "compileHotReLoad": true
+    "compileHotReLoad": true,
+    "compileWorklet": false,
+    "uglifyFileName": false,
+    "uploadWithSourceMap": true,
+    "packNpmManually": false,
+    "minifyWXSS": true,
+    "minifyWXML": true,
+    "localPlugins": false,
+    "disableUseStrict": false,
+    "useCompilerPlugins": false,
+    "condition": false,
+    "swc": false,
+    "disableSWC": true
   },
   "compileType": "miniprogram",
   "libVersion": "3.6.6",
-  "appid": "touristappid",
-  "projectname": "陪诊通-miniapp",
-  "miniprogramRoot": "miniprogram",
+  "appid": "wxa34ad4a71211c048",
+  "projectname": "陪诊通",
+  "miniprogramRoot": "miniprogram/",
   "simulatorType": "wechat",
-  "srcMiniprogramRoot": "miniprogram"
+  "srcMiniprogramRoot": "miniprogram/",
+  "simulatorPluginLibVersion": {},
+  "editorSetting": {}
 }
