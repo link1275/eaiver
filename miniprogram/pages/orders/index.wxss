@@ -1,0 +1,62 @@
+.order-list-head,
+.order-card {
+  padding: 26rpx;
+  margin-bottom: 18rpx;
+}
+
+.order-list {
+  display: grid;
+  gap: 16rpx;
+}
+
+.order-card {
+  background: rgba(255, 255, 255, 0.94);
+}
+
+.order-card-head,
+.order-foot {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  gap: 16rpx;
+}
+
+.order-card .muted {
+  display: block;
+  margin-top: 8rpx;
+  word-break: break-all;
+}
+
+.order-foot {
+  margin-top: 18rpx;
+  align-items: flex-end;
+}
+
+.order-id,
+.order-time {
+  font-size: 22rpx;
+  color: #6d848b;
+}
+
+.loading-wrap {
+  padding: 60rpx 20rpx;
+  text-align: center;
+}
+
+.cloud-tip {
+  margin-top: 18rpx;
+  padding: 16rpx 18rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.cloud-tip.ready {
+  background: rgba(20, 184, 166, 0.1);
+  color: #0f766e;
+}
+
+.cloud-tip.warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}

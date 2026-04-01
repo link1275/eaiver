@@ -1,8 +1,13 @@
 .search-bar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
   display: flex;
   gap: 16rpx;
   padding: 12rpx 0 20rpx;
   width: 100%;
+  background: linear-gradient(180deg, rgba(244, 251, 251, 0.98) 0%, rgba(244, 251, 251, 0.92) 78%, rgba(244, 251, 251, 0) 100%);
+  backdrop-filter: blur(10rpx);
 }
 
 .search-input {

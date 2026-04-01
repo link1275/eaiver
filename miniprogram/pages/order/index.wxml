@@ -8,6 +8,9 @@
     <view class="eyebrow">陪诊下单</view>
     <view class="section-title">提交需求，生成服务单</view>
     <view class="muted">适合老人、孕妇、儿科、术后复诊等需要全流程协助的用户。</view>
+    <view class="cloud-tip {{cloudReady ? 'ready' : 'warning'}}">
+      {{cloudReady ? '云开发已连接，提交后会真实保存订单。' : '当前还未配置云环境 ID，提交前请先在 app.js 中填写。'}}
+    </view>
   </view>
 
   <view class="panel form-panel">
@@ -64,7 +67,7 @@
       <textarea placeholder="例如：老人第一次去中山一院，需要协助挂号、抽血、取药。" data-field="notes" bindinput="onInput"></textarea>
     </view>
 
-    <view class="primary-btn submit-btn" bindtap="submitOrder">生成服务单</view>
+    <view class="primary-btn submit-btn" bindtap="submitOrder">{{isSubmitting ? '提交中...' : '生成并保存服务单'}}</view>
   </view>
 
   <view class="panel progress-panel" wx:if="{{orderPreview && showProgress}}">
@@ -82,6 +85,7 @@
     <view class="eyebrow">服务单预览</view>
     <view class="section-title">{{orderPreview.patientName}} 的就医协助任务</view>
     <view class="muted">{{orderPreview.hospitalName}} · {{orderPreview.departmentType}}</view>
+    <view class="chip" wx:if="{{orderId}}">订单编号：{{orderId}}</view>
 
     <view class="preview-list">
       <view class="preview-item">年龄：{{orderPreview.age}}</view>
@@ -103,6 +107,8 @@
       <button class="progress-btn" bindtap="simulateProgress">模拟服务进度</button>
       <button class="progress-btn reset" bindtap="resetProgress" wx:if="{{showProgress}}">重置</button>
     </view>
+
+    <view class="secondary-btn view-orders-btn" bindtap="goOrdersPage">查看我的订单</view>
   </view>
 
   <view class="empty-tip" wx:if="{{!orderPreview}}">

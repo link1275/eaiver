@@ -32,6 +32,24 @@
   background: linear-gradient(145deg, rgba(247, 255, 255, 0.95), rgba(239, 251, 249, 0.94));
 }
 
+.cloud-tip {
+  margin-top: 18rpx;
+  padding: 16rpx 18rpx;
+  border-radius: 20rpx;
+  font-size: 24rpx;
+  line-height: 1.6;
+}
+
+.cloud-tip.ready {
+  background: rgba(20, 184, 166, 0.1);
+  color: #0f766e;
+}
+
+.cloud-tip.warning {
+  background: rgba(245, 158, 11, 0.12);
+  color: #b45309;
+}
+
 .field {
   margin-bottom: 22rpx;
 }
@@ -96,6 +114,11 @@
   width: 100%;
   height: 92rpx;
   margin-top: 8rpx;
+}
+
+.view-orders-btn {
+  width: 100%;
+  margin-top: 18rpx;
 }
 
 .preview-list {

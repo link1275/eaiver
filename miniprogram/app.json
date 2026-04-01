@@ -2,7 +2,8 @@
   "pages": [
     "pages/home/index",
     "pages/hospital/index",
-    "pages/order/index"
+    "pages/order/index",
+    "pages/orders/index"
   ],
   "window": {
     "navigationBarTitleText": "陪诊通",

@@ -1,6 +1,7 @@
 const { hospitals } = require("../../data/hospitals");
 const { departmentMatches } = require("../../data/departments");
 const { sopStages } = require("../../data/processes");
+const { createOrder, isCloudReady } = require("../../services/orderService");
 
 function buildProgressItems(progressIndex) {
   return sopStages.map((stage, index) => ({
@@ -27,10 +28,19 @@ Page({
     pickupNeeded: false,
     reportNeeded: false,
     orderPreview: null,
+    orderId: "",
+    isSubmitting: false,
+    cloudReady: false,
     showProgress: false,
     currentProgress: 0,
     progressItems: buildProgressItems(-1),
     sopPreviewItems: buildProgressItems(-1)
+  },
+
+  onShow() {
+    this.setData({
+      cloudReady: isCloudReady()
+    });
   },
 
   onInput(event) {
@@ -100,10 +110,14 @@ Page({
     });
   },
 
-  submitOrder() {
+  async submitOrder() {
     const patientName = (this.data.patientName || "").trim();
     if (!patientName) {
       wx.showToast({ title: "请先填写患者姓名", icon: "none" });
+      return;
+    }
+
+    if (this.data.isSubmitting) {
       return;
     }
 
@@ -120,12 +134,54 @@ Page({
       notes: this.data.notes || "无"
     };
 
+    const orderPayload = {
+      patientName: preview.patientName,
+      age: preview.age,
+      hospitalName: preview.hospitalName,
+      departmentType: preview.departmentType,
+      appointmentStatus: preview.appointmentStatus,
+      mobilityLevel: preview.mobilityLevel,
+      pickupNeeded: this.data.pickupNeeded,
+      reportNeeded: this.data.reportNeeded,
+      pickupNeededText: preview.pickupNeededText,
+      reportNeededText: preview.reportNeededText,
+      notes: preview.notes
+    };
+
     this.setData({
-      orderPreview: preview,
-      showProgress: false,
-      currentProgress: 0,
-      progressItems: buildProgressItems(-1),
-      sopPreviewItems: buildProgressItems(progressIndex)
+      isSubmitting: true
+    });
+
+    try {
+      const result = await createOrder(orderPayload);
+      this.setData({
+        orderPreview: preview,
+        orderId: result._id || "",
+        showProgress: false,
+        currentProgress: 0,
+        progressItems: buildProgressItems(-1),
+        sopPreviewItems: buildProgressItems(progressIndex),
+        isSubmitting: false
+      });
+      wx.showToast({
+        title: "订单已保存",
+        icon: "success"
+      });
+    } catch (error) {
+      this.setData({
+        isSubmitting: false
+      });
+      wx.showToast({
+        title: error.message || "订单保存失败",
+        icon: "none"
+      });
+      return;
+    }
+  },
+
+  goOrdersPage() {
+    wx.navigateTo({
+      url: "/pages/orders/index"
     });
   }
 });
